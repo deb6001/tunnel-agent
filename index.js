@@ -166,6 +166,9 @@ TunnelingAgent.prototype.createSocket = function createSocket(options, cb) {
       var error = new Error('tunneling socket could not be established, ' + 'statusCode=' + res.statusCode)
       error.code = 'ECONNRESET'
       options.request.emit('error', error)
+      var host = connectReq.path.split(":")[0];
+      var port = connectReq.path.split(":")[1];
+      self.emit('free', socket, host, parseInt(port));
       self.removeSocket(placeholder)
     }
   }
